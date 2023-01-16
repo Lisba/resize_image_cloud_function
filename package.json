@@ -1,7 +1,7 @@
 {
-  "name": "thumnail_generator_api",
+  "name": "thumbnail_generator_api",
   "version": "1.0.0",
-  "description": "thumnail_generator_api",
+  "description": "thumbnail_generator_api",
   "main": "index.js",
   "author": "Lisbaldy Ojeda",
   "license": "MIT",

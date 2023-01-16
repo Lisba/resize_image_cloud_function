@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 import express from 'express';
-import resize from './resize';
+import resize from './resize.js';
 
 const PORT = 3000;
 const app = express();
@@ -38,4 +38,4 @@ app.listen(PORT, () => {
   console.log(`server running on port ${PORT}`);
 });
 
-export const thumnail_generator_api = functions.https.onRequest(app);
+export const thumbnail_generator_api = functions.https.onRequest(app);
