@@ -1,0 +1,12 @@
+{
+  "name": "thumnail_generator_api",
+  "version": "1.0.0",
+  "description": "thumnail_generator_api",
+  "main": "index.js",
+  "author": "Lisbaldy Ojeda",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": []
+}
