@@ -1,19 +1,16 @@
-import fs from 'fs';
 import sharp from 'sharp';
 
-const resize = (path, format, width, height) => {
-  const readStream = fs.createReadStream(path);
-  let transform = sharp();
-
-  if (format) {
-    transform = transform.toFormat(format);
-  }
-
-  if (width || height) {
-    transform = transform.resize(width, height);
-  }
-
-  return readStream;
+const resize = (path: string, width: number, height: number, originalName: string) => {
+  sharp(path)
+    .resize(width, height)
+    .toFile(`${originalName}`)
+    .then((data) => {
+      console.log('successful', data);
+      return data;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 };
 
 export default resize;
