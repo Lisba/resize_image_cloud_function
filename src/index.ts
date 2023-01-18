@@ -30,7 +30,7 @@ app.post('/image', (req, res) => {
         originalName: files[Object.keys(files)[0]]['originalFilename'],
       };
 
-      await resize(imageData?.filepath, 200, 200, imageData?.originalName);
+      await resize(imageData?.filepath, 120, 120, imageData?.originalName);
 
       const currentDirectory = new URL('../', import.meta.url);
       const thumbnailPath = `${currentDirectory?.pathname}${imageData?.originalName}`;
