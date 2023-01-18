@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const envVars = {
+  port: parseInt(process.env.PORT as string),
   apikey: process.env.FIREBASE_APP_APIKEY,
   authdomain: process.env.FIREBASE_APP_AUTHDOMAIN,
   projectid: process.env.FIREBASE_APP_PROJECTID,

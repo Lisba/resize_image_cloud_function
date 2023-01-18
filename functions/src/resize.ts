@@ -10,7 +10,7 @@ const resize = (path, format, width, height) => {
   }
 
   if (width || height) {
-    transform = transform.resize(width, height);
+    transform = transform.resize(width, height, { fit: 'outside' });
   }
 
   return readStream;

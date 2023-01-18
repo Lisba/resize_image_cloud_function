@@ -4,10 +4,11 @@ import formidable from 'formidable';
 import fs from 'fs';
 import firebase from './firebase.js';
 import resize from './resize.js';
+import envVars from './envVars.js';
 
 const app = express();
-const PORT = 3000;
-const bucket = 'gs://thumbnail-generator-ui.appspot.com/';
+const PORT = envVars.port;
+const bucket = envVars?.storagebucket;
 const childRef = 'images/';
 
 app.get('/', (_req, res) => {

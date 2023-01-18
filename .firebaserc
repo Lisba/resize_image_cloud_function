@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "thumbnail-generator-ui"
-  }
+    "default": "thumbnail-generator",
+    "staging": "thumbnail-generator-239e4"
+  },
+  "targets": {},
+  "etags": {}
 }
