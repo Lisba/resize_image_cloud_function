@@ -15,39 +15,45 @@ app.get('/', (_req, res) => {
 });
 
 app.post('/image', (req, res) => {
-  const form = formidable({ uploadDir: './uploads', keepExtensions: true });
+  try {
+    const form = formidable({ uploadDir: './uploads', keepExtensions: true });
 
-  form.parse(req, (err, _fields, files) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    const imageData = {
-      filepath: files[Object.keys(files)[0]]['filepath'],
-      mimetype: files[Object.keys(files)[0]]['mimetype'],
-      originalName: files[Object.keys(files)[0]]['originalFilename'],
-    };
-
-    resize(imageData?.filepath, 200, 200, imageData?.originalName);
-    const thumbnailPath = `${new URL('../', import.meta.url).pathname}/${imageData?.originalName}`;
-
-    fs.readFile(thumbnailPath, function (err, data) {
+    form.parse(req, async (err, _fields, files) => {
       if (err) {
         console.error(err);
+        return;
       }
 
-      const storage = getStorage(firebase, bucket);
-      const storageRef = ref(storage, `${childRef}${imageData?.originalName}`);
-      const metadata = {
-        contentType: imageData?.mimetype,
-        name: imageData?.originalName,
+      const imageData = {
+        filepath: files[Object.keys(files)[0]]['filepath'],
+        mimetype: files[Object.keys(files)[0]]['mimetype'],
+        originalName: files[Object.keys(files)[0]]['originalFilename'],
       };
-      uploadBytes(storageRef, data, metadata).then(() => {
-        getDownloadURL(storageRef).then((url) => res.json(url));
+
+      await resize(imageData?.filepath, 200, 200, imageData?.originalName);
+
+      const currentDirectory = new URL('../', import.meta.url);
+      const thumbnailPath = `${currentDirectory?.pathname}${imageData?.originalName}`;
+
+      fs.readFile(thumbnailPath, function (err, data) {
+        if (err) {
+          console.error(err);
+        }
+
+        const storage = getStorage(firebase, bucket);
+        const storageRef = ref(storage, `${childRef}${imageData?.originalName}`);
+        const metadata = {
+          contentType: imageData?.mimetype,
+          name: imageData?.originalName,
+        };
+        uploadBytes(storageRef, data, metadata).then(() => {
+          getDownloadURL(storageRef).then((url) => res.json(url));
+        });
       });
     });
-  });
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 app.listen(PORT, () => {
