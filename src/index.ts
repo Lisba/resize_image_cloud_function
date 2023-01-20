@@ -22,13 +22,13 @@ app.post('/image', (req, res) => {
     form.parse(req, async (err, _fields, files) => {
       if (err) {
         console.error(err);
-        return;
+        throw err;
       }
 
       const imageData = {
-        filepath: files[Object.keys(files)[0]]['filepath'],
-        mimetype: files[Object.keys(files)[0]]['mimetype'],
-        originalName: files[Object.keys(files)[0]]['originalFilename'],
+        filepath: files[Object.keys(files)[0]]?.['filepath'],
+        mimetype: files[Object.keys(files)[0]]?.['mimetype'],
+        originalName: files[Object.keys(files)[0]]?.['originalFilename'],
       };
 
       await resize(imageData?.filepath, 120, 120, imageData?.originalName);
@@ -39,6 +39,7 @@ app.post('/image', (req, res) => {
       fs.readFile(thumbnailPath, function (err, data) {
         if (err) {
           console.error(err);
+          throw err;
         }
 
         const storage = getStorage(firebase, bucket);
@@ -54,6 +55,7 @@ app.post('/image', (req, res) => {
     });
   } catch (error) {
     console.error(error);
+    res.status(500).send('Something broke!');
   }
 });
 

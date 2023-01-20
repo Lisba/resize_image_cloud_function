@@ -17,8 +17,7 @@ app.post('/image', (req, res, next) => {
 
   form.parse(req, (err, _fields, files) => {
     if (err) {
-      next(err);
-      return;
+      throw err;
     }
 
     const imageData = {

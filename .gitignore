@@ -65,6 +65,8 @@ node_modules/
 .DS_Store
 
 *.png
+*.jpeg
+*.jpg
 
 lib/
 uploads/*
